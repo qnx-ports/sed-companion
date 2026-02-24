@@ -1,0 +1,31 @@
+# Maintainer: Leo Shen <yishen@qnx.com>
+pkgname=sed
+pkgver=4.9
+pkgrel=0
+arch="all"
+pkgdesc="GNU stream editor"
+url="https://www.gnu.org/software/sed"
+license="GPL-3.0-or-later"
+depends="qnx-io-sock"
+makedepends="qnx-io-sock-dev"
+subpackages="$pkgname-doc"
+source="https://mirrors.kernel.org/gnu/sed/sed-$pkgver.tar.xz"
+
+build() {
+    ./configure \
+        --build="$CBUILD" \
+        --host="$CHOST" \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --mandir=/usr/share/man \
+        --disable-i18n \
+        --disable-nls
+    make
+}
+
+package() {
+    make DESTDIR="$pkgdir" install
+}
+sha512sums="
+36157a4b4a2430cf421b7bd07f1675d680d9f1616be96cf6ad6ee74a9ec0fe695f8d0b1e1f0b008bbb33cc7fcde5e1c456359bbbc63f8aebdd4fedc3982cf6dc  sed-4.9.tar.xz
+"
